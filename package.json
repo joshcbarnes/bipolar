@@ -1,0 +1,11 @@
+{
+  "name": "bipolar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "JOSH MFIN BARNES YO",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "express": "^4.15.2"
+  }
+}
