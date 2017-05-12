@@ -9,7 +9,8 @@ module.exports.getAccountData = function() {
         })
         .then(function(result) {
             return result.map(data => ({
-                name: data["ORG Name"]
+                name: data["ORG Name"],
+                arr: data.ARR
             }));
         });
 };

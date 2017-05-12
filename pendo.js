@@ -9,6 +9,12 @@ var client = axios.create({
     }
 });
 
+module.exports.getVisitors = function () {
+    return getReport("2V6LUd60_3hXtd-N8K_fKPva_Hc").then(function(data) {
+        console.log(data);
+    });
+};
+
 module.exports.getAccounts = function() {
     return getReport("78lu_HIecuapdd9zHnkDRNJqxxA").then(function(data) {
         return data.map(d => ({ name: d.account_agent_name }));
