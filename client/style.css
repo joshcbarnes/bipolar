@@ -1,5 +1,6 @@
 body {
   background-color: #fbfbfb;
+  padding: 20px;
 }
 
 h2 {
@@ -17,8 +18,7 @@ overview {
 }
 
 #pulse-container {
-    width: 800px;
-    height: 500px;
+  height: 600px;
 }
 
 .side-by-side {
