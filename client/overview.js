@@ -12,8 +12,8 @@ module.component("overview", {
 
 function OverviewController($http) {
     var that = this;
-    //fetchOrganizations();
-    populateRandomData();
+    fetchOrganizations();
+    //populateRandomData();
 
     this.chartSeries = ['Series A', 'Series B'];
 
