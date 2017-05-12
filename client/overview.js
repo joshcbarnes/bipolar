@@ -11,7 +11,9 @@ module.component("overview", {
 });
 
 function OverviewController($http) {
-    fetchOrganizations();
+    var that = this;
+    //fetchOrganizations();
+    populateRandomData();
 
     this.chartSeries = ['Series A', 'Series B'];
 
@@ -51,7 +53,7 @@ function OverviewController($http) {
     };
 
 
-    var that = this;
+
     function fetchOrganizations() {
         $http({method: "GET", url: "/organizations"}).then(function(response) {
 
@@ -66,5 +68,16 @@ function OverviewController($http) {
         }, function(response) {
             console.log("lolz we dun goofed");
         });
+    }
+
+    function populateRandomData() {
+        that.chartData = [];
+        for (var i = 0; i < 50; i++) {
+            that.chartData.push([{
+                x: Math.random(),
+                y: Math.random() * 1000000,
+                r: 15
+            }])
+        }
     }
 }
