@@ -30,9 +30,13 @@ function OverviewController($scope, $element) {
             xAxes: [{
                 display: true,
                 ticks: {
+                    display: false,
                     min: 0,
                     max: 1,
-                    stepSize: 0.1
+                    stepSize: 0.25
+                },
+                gridLines: {
+                    display: true
                 }
             }],
             yAxes: [{

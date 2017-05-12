@@ -43,3 +43,15 @@ overview {
   background-color: #94ff9d;
 }
 
+#emojis {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 40px;
+  margin-right: -20px;
+}
+
+#emojis img {
+  max-width: 32px;
+  max-height: 32px;
+}
+
