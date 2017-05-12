@@ -10,7 +10,9 @@ module.exports.getAccounts = function() {
         .then(function(result) {
             return result.map(data => ({
                 name: data["Account Name"],
-                arr: data["($) Total ARR"]
+                arr: data["($) Total ARR"],
+                currentSeats: data["Licenses Purchased"] ? data["Licenses Purchased"] : 0,
+                totalSeats: data["Marketing Team Size"] ? data["Marketing Team Size"] : 0
             }));
         });
 };

@@ -43,8 +43,8 @@ function formatBaseOrgs(sfData) {
             name: orgName,
             logoUrl: null,
             arr: sfData[orgName].arr,
-            currentSeats: null,
-            totalSeats: null
+            currentSeats: sfData[orgName].currentSeats,
+            totalSeats: sfData[orgName].totalSeats
         };
 
         if (!organizations.find(org => { return org.name === orgName })) {
