@@ -2,7 +2,7 @@ var csv = require("csvdata");
 
 var csvData = csv.load(process.env.BIPOLAR_SPREADSHEET_PATH);
 
-module.exports.getAccountData = function() {
+module.exports.getAccounts = function() {
     return csvData
         .catch(function(err) {
             console.log(err);

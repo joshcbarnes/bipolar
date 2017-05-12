@@ -10,22 +10,26 @@ app.get("/organizations", function(req, res) {
     console.log("Fetching Org Data");
     Promise.all([
         pendo.getAccounts(),
-        sf.getAccountData()
+        pendo.getUsage(),
+        sf.getAccounts()
     ]).then(function(results) {
         var pendoData = results[0].reduce(function(acc, account) {
             acc[account.name] = account;
             return acc;
         }, {});
 
-        var sfData = results[1].reduce(function(acc, account) {
+        var pendoUsageData = results[1];
+
+        var sfData = results[2].reduce(function(acc, account) {
             acc[account.name] = account;
             return acc;
         }, {});
 
         var organizations = formatBaseOrgs(pendoData, sfData);
         organizations.forEach(org => populateSFAttributes(org, sfData))
-        organizations.forEach(org => populateHappiness(org));
+        organizations.forEach(org => populateHappiness(org, pendoUsageData));
 
+        normalizeHappiness(organizations);
         res.send(organizations);
     }).catch(function(err) {
         console.log(err);
@@ -74,8 +78,24 @@ function populateSFAttributes(org, sfData) {
     }
 }
 
-function populateHappiness(org) {
-    org.happiness = Math.random();
+function populateHappiness(org, pendoUsageData) {
+    if (pendoUsageData[org.name]) {
+        orgUsage = pendoUsageData[org.name];
+        org.happiness = (2 * orgUsage.visitors * orgUsage.avgTime * orgUsage.avgEvents);
+    }
+}
+
+function normalizeHappiness(organizations) {
+    var maxHappiness = 0;
+    organizations.forEach(org => {
+        if (org.happiness > maxHappiness) {
+            maxHappiness = org.happiness;
+        }
+    });
+
+    organizations.forEach(org => {
+        org.happiness = org.happiness / maxHappiness;
+    });
 }
 
 app.listen(8080);
