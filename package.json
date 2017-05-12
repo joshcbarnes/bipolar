@@ -1,7 +1,8 @@
 {
   "name": "bipolar",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/index.js",
   "author": "JOSH MFIN BARNES YO",
   "license": "MIT",
   "dependencies": {

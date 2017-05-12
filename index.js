@@ -1,18 +1,11 @@
 var express = require("express");
-var axios = require("axios");
 var app = express();
-
-var pendoClient = axios.create({
-    baseURL: "https://app.pendo.io/",
-    timeout: 1000,
-    headers: {
-        "X-Pendo-Integration-Key": process.env.BIPOLAR_PENDO_KEY,
-        "Content-type": "application/json"
-    }
-});
+var pendo = require("./pendo.js");
 
 app.get("/", function(req, res) {
-    res.send("Hello world");
+    pendo.getReport("2V6LUd60_3hXtd-N8K_fKPva_Hc").then(function(data) {
+        res.send(data);
+    });
 });
 
 app.listen(8080);

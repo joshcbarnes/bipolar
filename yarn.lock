@@ -47,13 +47,13 @@ corser@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/corser/-/corser-2.0.1.tgz#8eda252ecaab5840dcd975ceb90d9370c819ff87"
 
-debug@2.6.1, debug@^2.4.5:
+debug@2.6.1, debug@^2.2.0, debug@^2.4.5:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.4, debug@^2.2.0:
+debug@2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.4.tgz#7586a9b3c39741c0282ae33445c4e8ac74734fe0"
   dependencies:
@@ -218,9 +218,13 @@ mime-types@~2.1.11, mime-types@~2.1.15:
   dependencies:
     mime-db "~1.27.0"
 
-mime@1.3.4, mime@^1.2.11:
+mime@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.4.tgz#115f9e3b6b3daf2959983cb38f149a2d40eb5d53"
+
+mime@^1.2.11:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.5.tgz#dc1ee70b80fee4999cb0775c9f94beefc9a779a3"
 
 minimist@0.0.8:
   version "0.0.8"
