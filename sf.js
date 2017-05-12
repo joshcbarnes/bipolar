@@ -9,8 +9,8 @@ module.exports.getAccounts = function() {
         })
         .then(function(result) {
             return result.map(data => ({
-                name: data["ORG Name"],
-                arr: data.ARR
+                name: data["Account Name"],
+                arr: data["($) Total ARR"]
             }));
         });
 };

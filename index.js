@@ -3,30 +3,27 @@ var app = express();
 var pendo = require("./pendo.js");
 var sf = require("./sf.js");
 var sha256 = require("sha256");
+var fuzz = require("fuzzball");
 
 app.use(express.static('client'))
 
 app.get("/organizations", function(req, res) {
     console.log("Fetching Org Data");
     Promise.all([
-        pendo.getAccounts(),
-        pendo.getUsage(),
-        sf.getAccounts()
+        sf.getAccounts(),
+        pendo.getUsage()
     ]).then(function(results) {
-        var pendoData = results[0].reduce(function(acc, account) {
+        var orgNames = {};
+
+        var sfData = results[0].reduce(function(acc, account) {
             acc[account.name] = account;
             return acc;
         }, {});
 
         var pendoUsageData = results[1];
 
-        var sfData = results[2].reduce(function(acc, account) {
-            acc[account.name] = account;
-            return acc;
-        }, {});
+        var organizations = formatBaseOrgs(sfData);
 
-        var organizations = formatBaseOrgs(pendoData, sfData);
-        organizations.forEach(org => populateSFAttributes(org, sfData))
         organizations.forEach(org => populateHappiness(org, pendoUsageData));
 
         normalizeHappiness(organizations);
@@ -38,23 +35,16 @@ app.get("/organizations", function(req, res) {
     });
 });
 
-function formatBaseOrgs(pendoData, sfData) {
+function formatBaseOrgs(sfData) {
     var organizations = [];
-    Object.keys(pendoData).forEach(orgName => {
-        var org = {
-            id: sha256(orgName),
-            name: orgName
-        };
-
-        if (!organizations.find(org => { return org.name === orgName })) {
-            organizations.push(org);
-        }
-    });
-
     Object.keys(sfData).forEach(orgName => {
         var org = {
             id: sha256(orgName),
-            name: orgName
+            name: orgName,
+            logoUrl: null,
+            arr: sfData[orgName].arr,
+            currentSeats: null,
+            totalSeats: null
         };
 
         if (!organizations.find(org => { return org.name === orgName })) {
@@ -65,24 +55,15 @@ function formatBaseOrgs(pendoData, sfData) {
     return organizations;
 }
 
-function populateSFAttributes(org, sfData) {
-    if (sfData[org.name]) {
-        var account = sfData[org.name];
-
-        org.logoUrl = null;
-        org.arr = account.arr;
-        org.currentSeats = null;
-        org.totalSeats = null;
-    } else {
-        console.log("Can't reconcile pendo and sf data: " + org.name);
-    }
-}
-
 function populateHappiness(org, pendoUsageData) {
-    if (pendoUsageData[org.name]) {
-        orgUsage = pendoUsageData[org.name];
-        org.happiness = Math.sqrt(2 * orgUsage.visitors * orgUsage.avgTime * orgUsage.avgEvents);
-    }
+    var bestPendoOrg = null;
+    Object.keys(pendoUsageData).forEach(p => {
+        if (bestPendoOrg == null || fuzz.distance(p, org.name) < fuzz.distance(bestPendoOrg.name, org.name)) {
+            bestPendoOrg = pendoUsageData[p];
+        }
+    });
+
+    org.happiness = Math.sqrt(2 * bestPendoOrg.visitors * bestPendoOrg.avgTime * bestPendoOrg.avgEvents);
 }
 
 function normalizeHappiness(organizations) {
