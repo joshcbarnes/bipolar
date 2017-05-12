@@ -51,10 +51,11 @@ function OverviewController($http) {
     };
 
 
+    var that = this;
     function fetchOrganizations() {
         $http({method: "GET", url: "/organizations"}).then(function(response) {
 
-            this.chartData = response.data.map(function(org) {
+            that.chartData = response.data.map(function(org) {
                return [{
                    x: org.happiness,
                    y: org.arr,
