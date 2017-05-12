@@ -48,6 +48,7 @@ function OverviewController($http) {
             fontFamily: "Open Sans",
             fontStyle: "bold",
             fontSize: 28,
+            padding: 25,
             fontColor: "#555"
         }
     };
