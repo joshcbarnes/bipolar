@@ -35,10 +35,18 @@ function OverviewController($http) {
             }],
             yAxes: [{
                 display: true,
+                type: 'logarithmic',
                 ticks: {
                     min: 0,
                     max: 1000000,
-                    stepSize: 100000
+                    callback: function(tick, index, ticks) {
+                        return "$" + tick.toLocaleString();
+                    }
+                },
+                afterBuildTicks: function(scale) {
+                    scale.ticks = [
+                        0, 10000, 100000, 1000000
+                    ];
                 }
             }]
         },
