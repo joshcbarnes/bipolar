@@ -3,6 +3,8 @@ var app = express();
 var pendo = require("./pendo.js");
 var sf = require("./sf.js");
 
+app.use(express.static('client'))
+
 app.get("/organizations", function(req, res) {
     console.log("Fetching Org Data");
 
