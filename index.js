@@ -81,7 +81,7 @@ function populateSFAttributes(org, sfData) {
 function populateHappiness(org, pendoUsageData) {
     if (pendoUsageData[org.name]) {
         orgUsage = pendoUsageData[org.name];
-        org.happiness = (2 * orgUsage.visitors * orgUsage.avgTime * orgUsage.avgEvents);
+        org.happiness = Math.sqrt(2 * orgUsage.visitors * orgUsage.avgTime * orgUsage.avgEvents);
     }
 }
 
