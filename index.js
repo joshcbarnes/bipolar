@@ -58,12 +58,12 @@ function formatBaseOrgs(sfData) {
 function populateHappiness(org, pendoUsageData) {
     var bestPendoOrg = null;
     Object.keys(pendoUsageData).forEach(p => {
-        if (bestPendoOrg == null || fuzz.distance(p, org.name) < fuzz.distance(bestPendoOrg.name, org.name)) {
-            bestPendoOrg = pendoUsageData[p];
+        if (!bestPendoOrg || fuzz.distance(p, org.name) < fuzz.distance(bestPendoOrg, org.name)) {
+            bestPendoOrg = p;
         }
     });
 
-    org.happiness = Math.sqrt(2 * bestPendoOrg.visitors * bestPendoOrg.avgTime * bestPendoOrg.avgEvents);
+    org.happiness = Math.sqrt(2 * pendoUsageData[bestPendoOrg].visitors * pendoUsageData[bestPendoOrg].avgTime * pendoUsageData[bestPendoOrg].avgEvents);
 }
 
 function normalizeHappiness(organizations) {
